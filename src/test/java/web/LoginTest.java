@@ -17,14 +17,16 @@ public class LoginTest {
 		WebDriverManager.chromedriver().setup();
 
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--headless"); // Required for GitHub Actions
-		options.addArguments("--no-sandbox"); // Avoid sandboxing issues on Linux
-		options.addArguments("--disable-dev-shm-usage"); // Prevent shared memory issues
-		options.addArguments("--disable-gpu"); // Disable GPU in headless mode
-		options.addArguments("--remote-allow-origins=*"); // Fix WebSocket issues in newer Selenium
-		// Explicitly set a temporary user data directory (optional, but resolves the error)
-		options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + System.currentTimeMillis());
-
+		options.addArguments("--headless"); // CI requirement
+		options.addArguments("--no-sandbox"); // Linux CI fix
+		options.addArguments("--disable-dev-shm-usage"); // Shared memory fix
+		options.addArguments("--disable-gpu"); // Headless fix
+		options.addArguments("--remote-allow-origins=*"); // WebSocket fix
+		// Avoid using any user data dir to prevent conflicts
+		options.addArguments("--incognito"); // Use incognito mode to avoid profiles
+		options.addArguments("--disable-extensions"); // Disable extensions
+		options.addArguments("--disable-default-apps"); // Avoid default app loadin
+		System.out.println("ChromeDriver path: " + System.getProperty("webdriver.chrome.driver"));
 		WebDriver driver=new ChromeDriver();
 
 		driver.manage().window().maximize();
