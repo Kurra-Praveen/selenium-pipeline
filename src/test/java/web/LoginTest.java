@@ -16,18 +16,9 @@ public class LoginTest {
 	public void LoginApp(){
 		WebDriverManager.chromedriver().setup();
 
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--headless"); // CI requirement
-		options.addArguments("--no-sandbox"); // Linux CI fix
-		options.addArguments("--disable-dev-shm-usage"); // Shared memory fix
-		options.addArguments("--disable-gpu"); // Headless fix
-		options.addArguments("--remote-allow-origins=*"); // WebSocket fix
-		// Avoid using any user data dir to prevent conflicts
-		options.addArguments("--incognito"); // Use incognito mode to avoid profiles
-		options.addArguments("--disable-extensions"); // Disable extensions
-		options.addArguments("--disable-default-apps"); // Avoid default app loadin
+		ChromeOptions options = getChromeOptions();
 		System.out.println("ChromeDriver path: " + System.getProperty("webdriver.chrome.driver"));
-		WebDriver driver=new ChromeDriver();
+		WebDriver driver=new ChromeDriver(options);
 
 		driver.manage().window().maximize();
 
@@ -44,5 +35,19 @@ public class LoginTest {
 		Assert.assertTrue(driver.getCurrentUrl().contains("dashboard"));
 
 		driver.quit();
+	}
+
+	private static ChromeOptions getChromeOptions() {
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--headless"); // CI requirement
+		options.addArguments("--no-sandbox"); // Linux CI fix
+		options.addArguments("--disable-dev-shm-usage"); // Shared memory fix
+		options.addArguments("--disable-gpu"); // Headless fix
+		options.addArguments("--remote-allow-origins=*"); // WebSocket fix
+		// Avoid using any user data dir to prevent conflicts
+		options.addArguments("--incognito"); // Use incognito mode to avoid profiles
+		options.addArguments("--disable-extensions"); // Disable extensions
+		options.addArguments("--disable-default-apps"); // Avoid default app loadin
+		return options;
 	}
 }
