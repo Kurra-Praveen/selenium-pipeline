@@ -16,9 +16,9 @@ public class LoginTest {
 	public void LoginApp(){
 		WebDriverManager.chromedriver().setup();
 
-		ChromeOptions options = getChromeOptions();
+//		ChromeOptions options = getChromeOptions();
 		System.out.println("ChromeDriver path: " + System.getProperty("webdriver.chrome.driver"));
-		WebDriver driver=new ChromeDriver(options);
+		WebDriver driver=new ChromeDriver(getChromeOptions());
 
 		driver.manage().window().maximize();
 
