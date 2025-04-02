@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.time.Duration;
+import java.util.Set;
 
 
 public class LoginTest {
@@ -31,6 +32,17 @@ public class LoginTest {
 		driver.findElement(By.name("password")).sendKeys("admin123");
 
 		driver.findElement(By.tagName("button")).click();
+
+		String windowHandle = driver.getWindowHandle();
+
+		Set<String> windowHandles = driver.getWindowHandles();
+
+		for(String s:windowHandles){
+			if(s.equalsIgnoreCase(windowHandle)){
+				//driver.switchTo().window(s);
+				break;
+			}
+		}
 
 		Assert.assertTrue(driver.getCurrentUrl().contains("dashboard"));
 
